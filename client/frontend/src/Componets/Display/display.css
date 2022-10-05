@@ -1,0 +1,8 @@
+.collection a.collection-item {
+    color: black;
+}
+
+.collection .collection-item.active {
+    background-color: var(--first-color);
+    color: #eafaf9;
+}
