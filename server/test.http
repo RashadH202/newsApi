@@ -1,0 +1,4 @@
+GET  http://localhost:3001/app/readnews
+Content-Type: application/json
+
+

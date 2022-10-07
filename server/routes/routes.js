@@ -1,6 +1,14 @@
 const express = require('express')
 const router = express()
-// const DataModel = require(../models/userdata)
+const dotenv = require('dotenv')
+dotenv.config()
+
+const DataModel = require('../models/userdata')
+const axios = require('axios')
+
+const NewsAPI = require('newsapi');
+const newsapi = new NewsAPI(process.env.NEWSAPI_ACCESS, );
+
 
 //Route to post objects to database from front end using express
 router.post("/addData", async (req, res) => {
@@ -55,3 +63,39 @@ router.delete("/delete/:id", async (req, res) => {
 
 
 //API Routes 
+
+router.get("/readnews", async (req, res) => {
+
+
+
+        newsapi.v2.everything({
+        q: 'biden',
+        sources: 'bbc-news,the-verge',
+        domains: 'bbc.co.uk,techcrunch.com',
+        from: Date(),
+        to: Date(),
+        language: 'en',
+        sortBy: 'relevancy',
+        page: 2
+      }).then(response => {
+      
+        const dataNews = []
+        dataNews.push(response)
+        /*
+          {
+            status: "ok",
+            articles: [...]
+          }
+        */console.log(response)        
+
+        console.log(dataNews)
+        res.send(dataNews)
+      });
+    
+
+    
+
+
+    
+})
+module.exports = router
