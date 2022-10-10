@@ -27,9 +27,9 @@ const Display = () => {
       newsContent: val.content
     } 
 
-    axios.post('http://localhost:3001/app/addarticle', data).then(() => {
+    axios.post('http://localhost:3001/app/addarticle', data).then((response) => {
       
-      favNewList.push(val)
+      favNewList.push(response.Data)
       console.log("added to favorites", favNewList)
       setFavNewList(favNewList.slice(0))
     })
