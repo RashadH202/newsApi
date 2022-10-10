@@ -11,17 +11,23 @@ const newsapi = new NewsAPI(process.env.NEWSAPI_ACCESS, );
 
 
 //Route to post objects to database from front end using express
-router.post("/addData", async (req, res) => {
+router.post("/addarticle", async (req, res) => {
     const Data = new DataModel({
-        dataName: req.body.artistName,
-        dataDesc: req.body.artistName,
+        newsAuthor: req.body.newsAuthor,
+        newsTitle: req.body.newsTitle,
+        newsDesc: req.body.newsDesc,
+        newsUrl: req.body.newsUrl,
+        newsImg: req.body.newsImg,
+        newsPubdate: req.body.newsPubdate,
+        newsContent: req.body.newsContent,
     })
     try {
-        await data.save()
+        await Data.save()
     }
     catch(err) {
         console.log(err)
     }
+    res.json({Data: Data.toJSON()})
 })
 
 //Route to read objects from database
@@ -64,9 +70,7 @@ router.delete("/delete/:id", async (req, res) => {
 
 //API Routes 
 
-router.get("/readnews", async (req, res) => {
-
-
+router.get("/readnews", (req, res) => {
 
         newsapi.v2.everything({
         q: 'biden',
@@ -79,17 +83,30 @@ router.get("/readnews", async (req, res) => {
         page: 2
       }).then(response => {
       
-        const dataNews = []
-        dataNews.push(response)
+        const articles = response.articles
+       
+
+
+        // const dataNews = []
+        // dataNews.push(response)
+        if (articles){
+
+        
+              res.send(articles.slice(0,36))
+            
+            
+        } else {
+            console.log("error")
+        }
+      
+      
         /*
           {
             status: "ok",
             articles: [...]
           }
-        */console.log(response)        
+        */console.log(response.articles.slice(0,36))        
 
-        console.log(dataNews)
-        res.send(dataNews)
       });
     
 

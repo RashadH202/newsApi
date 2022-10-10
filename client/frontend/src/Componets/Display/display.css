@@ -1,3 +1,5 @@
+
+
 .collection a.collection-item {
     color: black;
 }
@@ -5,4 +7,33 @@
 .collection .collection-item.active {
     background-color: var(--first-color);
     color: #eafaf9;
+}
+
+.articles__first {
+display:flex;
+flex-direction: row;
+justify-content: center;
+}
+
+.img__article {
+    width: 10rem;
+    height: 10rem;
+}
+
+.author__article {
+    width: 5rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.description__article {
+    width: 15rem;
+}
+
+.content__article {
+    width: 20rem;
+}
+
+.publishedAt__article {
+    width: 1rem;
 }

@@ -1,6 +1,9 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Row, Col, Collection, CollectionItem, Icon } from 'react-materialize'
 const Home = () => {
+
+
+
   return (
     <div className='display__savedata'>
 <Row>
