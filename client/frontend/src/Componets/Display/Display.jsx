@@ -1,18 +1,31 @@
-import React, {useState, useEffect, setState} from 'react'
+import React, { useEffect, useContext} from 'react'
 import './display.css'
 import axios from 'axios'
 import { Collection, CollectionItem, Col, Row } from 'react-materialize'
+import { FavoritedNewsStore } from '../../store/favorites.store'
+import { SearchResultsStore } from '../../store/search-results.store'
+
+
 const Display = () => {
 
-  const [newsList, setNewsList] =  useState([])
-  const [favNewList, setFavNewList] = useState([])
+
+
+  const favoritedContext = useContext(FavoritedNewsStore)
+  const searchResultsContext = useContext(SearchResultsStore);
+
+  const favoritesMap = {}
+  for (const news of favoritedContext.favoritedNews) {
+    favoritesMap[news.newsTitle] = true;
+  }
+
+  console.log({favoritesMap, favoritedContext, searchResultsContext})
 
   useEffect(() => {
-    axios.get('http://localhost:3001/app/readnews').then((res => {
-      setNewsList(res.data)
-    console.log("here is your list" + newsList)
-    }))
-  },[])
+    axios.get('http://localhost:3001/app/readnews')
+    .then((res) => {
+      searchResultsContext.set(res.data);
+    })
+  }, []);
 
   const addArticle = (val) => {
     console.log(val)
@@ -28,10 +41,8 @@ const Display = () => {
     } 
 
     axios.post('http://localhost:3001/app/addarticle', data).then((response) => {
-      
-      favNewList.push(response.Data)
-      console.log("added to favorites", favNewList)
-      setFavNewList(favNewList.slice(0))
+      console.log("success");
+      favoritedContext.add(response.data.data);
     })
     
 
@@ -47,7 +58,7 @@ const Display = () => {
       s={12}
     >
 <Collection>
-      {newsList.map((val, key) => {
+      {searchResultsContext.searchResults.map((val, key) => {
 
         
         return <div key = {key}>
@@ -63,7 +74,12 @@ const Display = () => {
             <div className='description__article'>{val.description}</div>
             <div className='content__article'>{val.content}</div>
             <div className='publishedAt__article'>{val.publishedAt}</div>
-            <button onClick={() => addArticle(val)}>Fav</button>
+
+            {!favoritesMap[val.title] && (
+              <button onClick={() => addArticle(val)}>Fav</button>
+            )
+            }
+            
             </div>
         </CollectionItem>
            
@@ -75,22 +91,6 @@ const Display = () => {
 
 </Col>
   </Row> 
-
-      {/* <Row>
-    <Col
-      m={12}
-      s={12}
-    >
-      <Collection>
-        <CollectionItem href="#">
-          Alvin
-        </CollectionItem>
-
-          
-      </Collection>
-    </Col>
-  </Row> */}
-  
   </div>
   )
 }

@@ -23,15 +23,17 @@ router.post("/addarticle", async (req, res) => {
     })
     try {
         await Data.save()
+        res.json({Data: Data.toJSON()})
     }
     catch(err) {
         console.log(err)
     }
-    res.json({Data: Data.toJSON()})
+    
 })
 
 //Route to read objects from database
 router.get("/read", async (req, res) => {
+    console.log('read route called')
     DataModel.find({}, (err, result) => {
         if (err) {
             res.send(err)
@@ -40,31 +42,14 @@ router.get("/read", async (req, res) => {
     })
 })
 
-//Route to updates objects in database
-router.put("/update", async (req,res) => {
-    const newDataName = req.body.newdataName
-    const newDataDesc = req.body.newdatadesc
-
-    const id = req.body.id
-
-    try {
-        await DataModel.findbyId(id, (err, updataData) => {
-            updataData.dataName = newDataName
-            updateData.dataDesc = newDataDesc
-        })
-    }
-    catch(err) {
-        console.log(err)
-    }
-})
 
 //route to delete data from database
 router.delete("/delete/:id", async (req, res) => {
-    const id = req.params.id
+    const id = req.params._id
     
-    await DataModel.findbyIdAndRemove(id).exec()
+    await DataModel.findbyIdAndRemove(_id).exec()
     
-    res.send(id)
+    res.send(_id)
 })
 
 
@@ -82,37 +67,70 @@ router.get("/readnews", (req, res) => {
         sortBy: 'relevancy',
         page: 2
       }).then(response => {
-      
-        const articles = response.articles
-       
 
-
-        // const dataNews = []
-        // dataNews.push(response)
-        if (articles){
-
-        
-              res.send(articles.slice(0,36))
-            
-            
-        } else {
-            console.log("error")
-        }
-      
-      
-        /*
+                /*
           {
             status: "ok",
             articles: [...]
           }
-        */console.log(response.articles.slice(0,36))        
+        */
+      
+        const articles = response.articles
+
+        if (articles){
+
+              res.send(articles)
+            
+            
+        } else {
+            console.log("error")
+            res.send("error")
+        }
+            console.log(response.articles)        
 
       });
     
+})
 
-    
+router.get("/searchnews", (req, res) => {
 
+    const searchTerm = req.body.searchTerm
 
-    
+    if(!searchTerm) {
+        return res.status(400).json({
+            message: 'search topic needed'
+        })
+    }
+
+    newsapi.v2.everything({
+    q: searchTerm,
+    from: Date(),
+    to: Date(),
+    language: 'en',
+    sortBy: 'relevancy',
+  }).then(response => {
+
+            /*
+      {
+        status: "ok",
+        articles: [...]
+      }
+    */
+  
+    const articles = response.articles
+
+    if (articles){
+
+          res.send(articles)
+        
+        
+    } else {
+        console.log("error")
+        res.send("error")
+    }
+        console.log(response.articles)        
+
+  });
+console.log("topic searched")
 })
 module.exports = router

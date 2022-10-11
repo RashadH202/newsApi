@@ -1,10 +1,23 @@
-import React, {useState, useEffect} from 'react'
+import axios from 'axios';
+import React, {useState, useContext} from 'react'
 import { TextInput, Icon } from 'react-materialize'
+import { SearchResultsStore } from '../../store/search-results.store';
 import './search.css'
+
+
 const Search = () => {
 
-  const [dataName, setDataName] = useState("")
+ const [searchTerm, setSearchTerm] = useState('')
+ const searchResultsContext = useContext(SearchResultsStore);
 
+console.log({ searchResultsContext})
+
+const searchForResults = () => {
+  axios.get(`http://localhost:3001/app/search-news?search_term=${searchTerm}`)
+  .then((res)=> {
+    searchResultsContext.set(res.data)
+  })
+}
 
   return (
     
@@ -14,10 +27,10 @@ const Search = () => {
         id="userserach"
         label="Search"
         onChange={(event) => {
-          setDataName(event.target.value)
+          setSearchTerm(event.target.value)
          }}
       />
-      
+      <button className='btn' onClick={searchForResults}>Search</button>
     </div>
   )
 }
