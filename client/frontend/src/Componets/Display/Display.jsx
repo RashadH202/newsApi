@@ -2,30 +2,30 @@ import React, { useEffect, useContext} from 'react'
 import './display.css'
 import axios from 'axios'
 import { Collection, CollectionItem, Col, Row } from 'react-materialize'
-import { FavoritedNewsStore } from '../../store/favorites.store'
-import { SearchResultsStore } from '../../store/search-results.store'
+
+import { FavoritedNewsStore } from "../../Store/Favorites.store";
+import { SearchResultsStore } from '../../Store/Search-results.store';
+import { hash } from '../../util';
 
 
 const Display = () => {
 
-
-
-  const favoritedContext = useContext(FavoritedNewsStore)
-  const searchResultsContext = useContext(SearchResultsStore);
+  const favoritedContext = useContext(FavoritedNewsStore);
+  const searchResultsContext = useContext(SearchResultsStore)
 
   const favoritesMap = {}
-  for (const news of favoritedContext.favoritedNews) {
-    favoritesMap[news.newsTitle] = true;
+  for (const news of favoritedContext.favoritedNews)  {
+    favoritesMap[hash(news.newsTitle)] = true;
   }
 
-  console.log({favoritesMap, favoritedContext, searchResultsContext})
+
+ console.log({favoritesMap, favoritedContext, searchResultsContext})
 
   useEffect(() => {
-    axios.get('http://localhost:3001/app/readnews')
-    .then((res) => {
-      searchResultsContext.set(res.data);
-    })
-  }, []);
+    axios.get('http://localhost:3001/app/readnews').then((res => {
+      searchResultsContext.set(res.data)
+    }))
+  },[])
 
   const addArticle = (val) => {
     console.log(val)
@@ -40,9 +40,12 @@ const Display = () => {
       newsContent: val.content
     } 
 
-    axios.post('http://localhost:3001/app/addarticle', data).then((response) => {
-      console.log("success");
-      favoritedContext.add(response.data.data);
+    axios.post('http://localhost:3001/app/addarticle', data).then((res) => {
+      
+      
+      console.log("added to favorites", val.newsTitle)
+      favoritedContext.add(res.data.Data)
+
     })
     
 
@@ -74,10 +77,10 @@ const Display = () => {
             <div className='description__article'>{val.description}</div>
             <div className='content__article'>{val.content}</div>
             <div className='publishedAt__article'>{val.publishedAt}</div>
-
-            {!favoritesMap[val.title] && (
-              <button onClick={() => addArticle(val)}>Fav</button>
-            )
+            {
+              !favoritesMap[hash(val.title)] && (
+                <button className='btn'onClick={() => addArticle(val)}>Fav</button>
+              )
             }
             
             </div>
@@ -91,6 +94,7 @@ const Display = () => {
 
 </Col>
   </Row> 
+  
   </div>
   )
 }

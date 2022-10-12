@@ -6,7 +6,7 @@ export const SearchResultsStore = createContext({
 })
 
 export function SearchResultsContext(props) {
-    const {searchResults, SetSearchResults} = useState([])
+    const [searchResults, SetSearchResults] = useState([])
 
     const value = {
         searchResults,

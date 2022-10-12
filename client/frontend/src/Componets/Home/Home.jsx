@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useContext} from 'react'
 import { Row, Col, Collection, CollectionItem, Icon } from 'react-materialize'
-import { FavoritedNewsStore } from '../../store/favorites.store';
+import { FavoritedNewsStore } from '../../Store/Favorites.store';
 import axios from 'axios'
 
 const Home = () => {
@@ -13,7 +13,7 @@ const Home = () => {
     axios.get('http://localhost:3001/app/read')
     .then((res) => {
       console.log("here is your favorites list:", res);
-      favoritedContext.set(res.data.data);
+      favoritedContext.set(res.data);
     })
   }, []);
 
@@ -39,18 +39,18 @@ const Home = () => {
     {
             favoritedContext.favoritedNews.map((news, index) => {
               return (
-                <CollectionItem key={news.id.toString()} className="avatar">
+                <CollectionItem key={news._id.toString()} className="avatar">
                   <img
                     alt=""
                     className="circle"
-                    src={news.img}
+                    src={news.newsImg}
                   />
-                  <a href={news.url}>
-                    <h1 className="title">{news.title}</h1>
+                  <a href={news.newsUrl}>
+                    <h1 className="title">{news.newsTitle}</h1>
                   </a>
-                  <p>{news.description}</p>
-                  <p>{news.created_at}</p>
-                  <span className="secondary-content" onClick={() => removeFavoriteNews(news.id)}>
+                  <p>{news.newsDesc}</p>
+                  <p>{news.newsPubdate}</p>
+                  <span className="secondary-content" onClick={() => removeFavoriteNews(news._id)}>
                     <Icon>grade</Icon>
                   </span>
                 </CollectionItem>

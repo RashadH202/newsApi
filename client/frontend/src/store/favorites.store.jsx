@@ -28,8 +28,8 @@ export function FavoritedNewsContext(props) {
         }
     }
     return (
-        <FavoritedNewsContext value={value}>
+        <FavoritedNewsStore.Provider value={value}>
             {props.children}
-        </FavoritedNewsContext>
+        </FavoritedNewsStore.Provider>
     )
 }

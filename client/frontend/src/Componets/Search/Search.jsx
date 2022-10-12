@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, {useState, useContext} from 'react'
 import { TextInput, Icon } from 'react-materialize'
-import { SearchResultsStore } from '../../store/search-results.store';
+import { SearchResultsStore } from '../../Store/Search-results.store';
 import './search.css'
 
 
@@ -10,7 +10,7 @@ const Search = () => {
  const [searchTerm, setSearchTerm] = useState('')
  const searchResultsContext = useContext(SearchResultsStore);
 
-console.log({ searchResultsContext})
+console.log({ searchResultsContext })
 
 const searchForResults = () => {
   axios.get(`http://localhost:3001/app/search-news?search_term=${searchTerm}`)
