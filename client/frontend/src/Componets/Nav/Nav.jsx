@@ -6,7 +6,7 @@ const Nav = () => {
     <div className='nav__bar'>
       <Navbar
        alignLinks="left"
-       brand={<a className="brand-logo" href="#home">Api Aplication</a>}
+       brand={<a className="brand-logo" href="#home">MERN newsAPI</a>}
        centerLogo
        id="mobile-nav"
        menuIcon={<Icon>menu</Icon>}
@@ -22,7 +22,7 @@ const Nav = () => {
          preventScrolling: true
        }}>
         <NavItem href="#home">
-        Api Application
+        newsAPI
         </NavItem>
       </Navbar></div>
   )

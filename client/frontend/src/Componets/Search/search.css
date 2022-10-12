@@ -1,3 +1,20 @@
 .input-field {
     margin-top: 9rem;
 }
+
+#userserach {
+    width: 20rem;
+}
+
+.application-desciption {
+    width:30rem;
+    font-size: var(--h2-font-size);
+}
+
+.searchBtn {
+    margin-top: 2rem;
+}
+
+.input-field {
+    margin-top: 1rem;
+}

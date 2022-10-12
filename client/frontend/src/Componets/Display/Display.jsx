@@ -71,15 +71,19 @@ const Display = () => {
               <a className ='title__article'href={val.url}target="_blank" rel="noopener" >{val.title}</a>
 
               <img className='img__article'src={val.urlToImage} />
-              <div className='author__article'>{val.author}</div>
+              <div className='author__article'>Author: {val.author}</div>
           
             </div>
-            <div className='description__article'>{val.description}</div>
-            <div className='content__article'>{val.content}</div>
+            <div className='description__article'>
+              <p>{val.description}</p>
+              <br />
+              <p>{val.content}</p>
+            </div>
+            
             <div className='publishedAt__article'>{val.publishedAt}</div>
             {
               !favoritesMap[hash(val.title)] && (
-                <button className='btn'onClick={() => addArticle(val)}>Fav</button>
+                <button className='btn displayBtn'onClick={() => addArticle(val)}>Fav</button>
               )
             }
             

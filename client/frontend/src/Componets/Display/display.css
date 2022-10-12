@@ -12,28 +12,49 @@
 .articles__first {
 display:flex;
 flex-direction: row;
-justify-content: center;
-}
+justify-content: space-evenly;
+height: 16rem;
 
+}
+.title__article {
+    display: flex;
+    flex-wrap: wrap;
+    width:15rem;
+    height: 3rem;
+    font-size: .8rem;
+    
+}
 .img__article {
-    width: 10rem;
+    width: 15rem;
     height: 10rem;
+    min-width: 15rem;
+    min-height: 10rem;
 }
 
 .author__article {
-    width: 5rem;
+    width: 10rem;
     display: flex;
     flex-wrap: wrap;
+    font-size: var(--small-font-size);
 }
 
 .description__article {
-    width: 15rem;
+    width: 40rem;
+    height: 14rem;
+    justify-content: center;
+    margin-top: 1rem;
+
 }
 
-.content__article {
-    width: 20rem;
-}
 
 .publishedAt__article {
-    width: 1rem;
+    margin-top: 5rem;
+    width: 7rem;
+    justify-content: center;
+}
+
+.displayBtn {
+    margin: 2rem;
+    margin-top: 5rem;
+    
 }

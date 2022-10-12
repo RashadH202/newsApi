@@ -22,6 +22,9 @@ const searchForResults = () => {
   return (
     
     <div className='search__data'>
+      <div className='application-desciption'>
+        Welcome to my news API, Feel free to search for any current events! favorite the ones that seem intersting for later!
+      </div>
       <TextInput
         icon={<Icon>search</Icon>}
         id="userserach"
@@ -30,7 +33,7 @@ const searchForResults = () => {
           setSearchTerm(event.target.value)
          }}
       />
-      <button className='btn' onClick={searchForResults}>Search</button>
+      <button className='btn searchBtn' onClick={searchForResults}>Search</button>
     </div>
   )
 }
